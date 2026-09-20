@@ -1,10 +1,41 @@
-﻿@page
+@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Garage Intake · Service desk</title><link rel="stylesheet" href="~/site.css" asp-append-version="true" /><script src="~/site.js" asp-append-version="true" defer></script></head>
+<body>
+<header><a class="brand" href="/"><span class="mark">G<span>↗</span></span> GARAGE INTAKE</a><span class="header-note">THE SERVICE DESK, SIMPLIFIED</span><span class="mode"><i></i> @Model.Mode mode</span></header>
+<main>
+<div class="intro"><p class="eyebrow">CUSTOMER WORDS → WORKSHOP CLARITY</p><h1>A clearer start to<br />every repair.</h1><p>Turn a customer's fault description into a useful intake draft.<br class="desktop" /> Review the details. Ask the right questions. Prepare the job card.</p></div>
+<div class="workspace">
+<section class="panel input-panel" aria-labelledby="input-title">
+<div class="section-top"><span class="step">01</span><span class="eyebrow">LISTEN & CAPTURE</span></div>
+<h2 id="input-title">What's happening?</h2><p class="muted">Start with the customer's own words.</p>
+<form method="post" id="intake-form">
+<div asp-validation-summary="All" class="validation" role="alert"></div>
+<label asp-for="Description">Fault description</label>
+<textarea asp-for="Description" rows="8" minlength="10" maxlength="2000" required placeholder="e.g. My Ford Focus makes a grinding noise when braking. It started yesterday and is worse in the morning." aria-describedby="input-help count"></textarea>
+<div class="field-meta"><span id="input-help">Include symptoms, timing and warning lights.</span><span id="count">@Model.Description.Length / 2,000</span></div>
+<p class="sample-label">TRY AN EXAMPLE</p><div class="samples"><button type="button" data-example="My Ford Focus makes a grinding noise when braking. It started yesterday and seems worse in the morning.">Braking noise ↗</button><button type="button" data-example="My car won't start this morning. The dashboard lights come on but I only hear a clicking sound.">Won't start ↗</button><button type="button" data-example="Something feels wrong with the car, but I can't describe it. It has happened twice this week.">Unclear fault ↗</button></div>
+<button type="submit" class="primary" id="analyse">Prepare intake draft <span>→</span></button>
+<p class="privacy">@(Model.Mode == "Demo" ? "Offline demo · Simple keyword rules, no AI call. Text is not saved by this application." : "AI mode · Your description is sent to OpenAI. Omit names, contact details and registration numbers. Text is not saved by this application.")</p>
+<p id="working" role="status" hidden>Preparing your draft…</p>
+</form></section>
+<section class="panel result-panel" aria-labelledby="result-title">
+<div class="section-top"><span class="step">02</span><span class="eyebrow">REVIEW & PREPARE</span></div>
+<h2 id="result-title">Your intake draft</h2><p class="muted">A starting point for the adviser, ready to refine.</p>
+@if (Model.Result is null) {
+<div class="empty"><div class="document-icon">≡</div><h3>From a few words to a clear next step.</h3><p>Add a fault description to get a customer summary,<br class="desktop" /> suggested questions and an editable job card.</p><div class="preview-labels"><span>Customer report</span><span>Follow-up questions</span><span>Job card</span></div></div>
+} else {
+<div class="result-content" id="result"><div class="result-badges"><span class="category">@Model.Result.Category</span><span class="review">Adviser review required</span></div>
+<h3>@(Model.Mode == "Demo" ? "Customer report · preserved verbatim" : "Customer report · AI summary")</h3><p class="summary">@Model.Result.Summary</p>
+<h3>Suggested follow-up questions</h3><ol>@foreach (var question in Model.Result.Questions) { <li>@question</li> }</ol>
+<div class="card-label"><label for="job-card">Editable job card</label><span>Make it your own</span></div><textarea id="job-card" rows="10">@Model.Result.JobCard</textarea>
+<label class="confirmation"><input type="checkbox" id="reviewed" /> I have reviewed and corrected this draft.</label>
+<div class="actions"><button type="button" class="secondary" id="download" disabled>Download job card ↓</button><span id="export-status" role="status"></span></div>
 </div>
+}
+</section></div>
+<div class="footer-note"><span>HUMAN JUDGEMENT, ALWAYS.</span><p>Intake assistance only. Confirm the report and assess next steps with a qualified adviser.<br />This draft does not diagnose a fault or determine whether a vehicle is safe to drive.</p></div>
+</main><footer><span>GARAGE INTAKE</span><span>Built for a better handover.</span></footer>
+</body></html>
