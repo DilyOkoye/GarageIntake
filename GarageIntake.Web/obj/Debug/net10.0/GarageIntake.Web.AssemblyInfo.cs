@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("8ae382ec-f233-482b-8e9b-5c047d2bb60f")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("GarageIntake.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+994abdf985acb1887ccc6b170c1500af2e8c1eca")]
 [assembly: System.Reflection.AssemblyProductAttribute("GarageIntake.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GarageIntake.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
