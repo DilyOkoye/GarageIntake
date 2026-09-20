@@ -46,7 +46,7 @@ dotnet run --project src/GarageIntake.Web --urls http://localhost:5000
 ```
 
 or
-# enter your own key locally, never commit it
+
 ``` via user secret locally
 
 dotnet user-secrets init --project GarageIntake.Web
